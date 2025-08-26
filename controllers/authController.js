@@ -42,6 +42,8 @@ const register = async (req, res) => {
 // Login a user
 
 const login = async (req, res) => {
+    console.log('POST /login hit');
+    console.log('req.body:', req.body);
     const { email, password } = req.body;
 
     try {
@@ -69,6 +71,10 @@ const login = async (req, res) => {
                 name: user.name,
             },
         });
+
+        console.log('User found:', user);
+        console.log('Password match:', isMatch);
+
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ error: 'Login Failed' });
