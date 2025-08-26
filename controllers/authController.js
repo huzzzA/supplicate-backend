@@ -18,11 +18,6 @@ const register = async (req, res) => {
             return res.status(400).json({ error: 'User registration failed' });
         };
 
-        if (error.code === '23505') {
-            return res.status(400).json({ error: 'Email already exists' });
-        }
-
-
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
             expiresIn: '7d',
         });
@@ -34,6 +29,11 @@ const register = async (req, res) => {
         });
 
     } catch (error) {
+
+        if (error.code === '23505') {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
         console.error('Error registering user:', error);
         res.status(400).json({ error: 'Error registering' });
     }
