@@ -11,10 +11,6 @@ router.post('/forgot-password', forgotPassword);
 // Reset password route
 router.post('/reset-password', resetPassword);
 
-router.get('/login', (req, res) => {
-  res.send("Login route is working. Use POST to actually log in.");
-});
-
 
 // Export the router
 module.exports = router;
