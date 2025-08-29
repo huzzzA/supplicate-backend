@@ -2,15 +2,15 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'SendGrid',
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: 'apikey',
+    pass: process.env.SENDGRID_API_KEY,
   },
 });
 
 const sendResetEmail = async (to, token) => {
-    const resetUrl = `exp://192.168.0.150:8081/--/reset-password?token=${token}`;
+    const resetUrl = `supplicate://reset-password?token=${token}`;
 
     await transporter.sendMail({
         from: `"Supplicate" <${process.env.EMAIL_USER}>`,
