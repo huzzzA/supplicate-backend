@@ -1,7 +1,7 @@
 const pool = require('../database/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-//const { sendResetEmail } = require('../utils/mailer');
+const { sendResetEmail } = require('../utils/mailer');
 
 // Register a new user
 const register = async (req, res) => {
@@ -40,7 +40,6 @@ const register = async (req, res) => {
 };
 
 // Login a user
-
 const login = async (req, res) => {
     console.log('POST /login hit');
     console.log('req.body:', req.body);
@@ -86,7 +85,7 @@ const forgotPassword = async (req, res) => {
     const { email } = req.body;
 
     try {
-        setLoad(true);
+        
         const result = await pool.query(
             'SELECT * FROM users WHERE email = $1', [email]);
         const user = result.rows[0];
@@ -105,7 +104,7 @@ const forgotPassword = async (req, res) => {
     } catch (error) {
         console.error('Error sending password reset email:', error);
         res.status(500).json({ error: 'Failed to send password reset email' });
-        setLoad(false);
+        
     }
 };
 
