@@ -4,7 +4,7 @@ require('dotenv').config();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendResetEmail = async (to, token) => {
-  const resetUrl = `exp://192.168.0.150:8081/--/reset-password?token=${token}`;
+  const resetUrl = `supplicate://reset-password?token=${token}`;
   
 
   try {
