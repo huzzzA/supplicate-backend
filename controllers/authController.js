@@ -99,7 +99,8 @@ const forgotPassword = async (req, res) => {
         });
 
         await sendResetEmail(email, token);
-
+        
+        console.log('email used was ', email);
         res.status(200).json({ message: 'Password reset email sent' });
     } catch (error) {
         console.error('Error sending password reset email:', error);
