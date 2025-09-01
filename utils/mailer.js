@@ -5,13 +5,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendResetEmail = async (to, token) => {
   const resetUrl = `supplicate://reset-password?token=${token}`;
-  const recipient =
-    process.env.NODE_ENV === "development" ? "delivered@resend.dev" : to;
+  
 
   try {
     const { data } = await resend.emails.send({
       from: process.env.EMAIL_FROM,
-      to: recipient,
+      to,
       subject: 'Password Reset Request',
       html: `
         <h1>Password Reset Request</h1>
