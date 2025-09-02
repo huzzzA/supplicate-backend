@@ -62,9 +62,44 @@ const getDuas = async (req, res) => {
 
 };
 
+const getDuaFromSearch = async (req, res) => {
+    const { search } = req.query;
+    console.log('Search query:', search); // Log the search query for debugging  
+
+    if (!search || search.trim() === '') {
+        return res.status(400).json({ error: 'Search query is required' });
+    }
+
+    const searchQuery = `%${search}%`;
+
+    const sql = `
+    SELECT *
+    FROM flattened_duas
+    WHERE arabic ILIKE $1
+       OR translation ILIKE $1
+       OR transliteration ILIKE $1
+       OR subcategory ILIKE $1
+       OR category ILIKE $1
+    ORDER BY category, subcategory;
+  `;
+
+    pool.query(sql, [searchQuery], (error, results) => {
+        if (error) {
+            console.error(error); // Log the error for debugging
+            res.status(500).send('Error fetching data'); // Inform the client
+            return;
+        }
+
+        res.status(200).json(results.rows)
+    }
+    );
+
+};
+
 
 module.exports = {
     getDuaCategories,
     getDuaSubCategories,
-    getDuas
+    getDuas,
+    getDuaFromSearch
 }
